@@ -71,7 +71,7 @@ resource "aws_instance" "bastion" {
   key_name               = "${var.ec2_key_name}"
   vpc_security_group_ids = ["${aws_security_group.bastion_sg.id}"]
 
-  tags {
+  tags = {
     Name = "${var.vpc_name}-bastion"
   }
 }
@@ -80,7 +80,7 @@ resource "aws_eip" "bastion" {
   instance = "${aws_instance.bastion.id}"
   vpc      = true
 
-  tags {
+  tags = {
     Name = "${var.vpc_name}-bastion"
   }
 }
@@ -123,9 +123,9 @@ resource "aws_alb" "alb" {
   security_groups                  = ["${aws_security_group.alb_sg.id}"]
 
   name    = "${var.vpc_name}-alb"
-  subnets = ["${module.aws_vpc.public_subnets}"]
+  subnets = "${module.aws_vpc.public_subnets}"
 
-  tags {
+  tags = {
     Name = "${var.vpc_name}-alb"
   }
 }
