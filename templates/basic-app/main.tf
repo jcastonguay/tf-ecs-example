@@ -25,7 +25,7 @@ resource "aws_ecs_service" "service" {
 data "template_file" "task_definition" {
   template = "${file("${path.module}/ecs-tasks/app.json")}"
 
-  vars {
+  vars = {
     docker_image_url = "${var.docker_image}"
     container_name   = "${local.app_name}"
     aws_region       = "${var.region}"
