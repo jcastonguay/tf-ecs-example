@@ -5,8 +5,7 @@ resource "aws_ecs_cluster" "cluster" {
 
 data "template_file" "user_data" {
   template = "${file("${path.module}/user_data.tpl")}"
-
-  vars {
+  vars ={
     cluster_name = "${aws_ecs_cluster.cluster.name}"
   }
 }
@@ -58,7 +57,7 @@ resource "aws_autoscaling_group" "service" {
   max_size             = "${var.asg_size}"
   min_size             = "${var.asg_size}"
   name                 = "${var.vpc_name}-asg-a"
-  vpc_zone_identifier  = ["${local.app_subnet_ids}"]
+  vpc_zone_identifier  = "${local.app_subnet_ids}"
 
   tag {
     key                 = "Name"
